@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900|Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
+
+@import "main/bootstrap.css";
+@import "main/styles.css";
+@import "../fonts/css/fontawesome-all.min.css";
+
+// body, #page {
+//     min-height: 100vh;
+// }
+
+.bg-highlight {
+    color: #FFF !important;
+}
+
+.bg-highlight, .footer-bar-2 .active-nav, .footer-bar-5 strong, .footer-bar-4 strong, .splide__pagination__page.is-active {
+    background-color: #37BC9B !important;
+}
+
+.preloader-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noscroll {
+    position: fixed!important
+}
+
+.page-content {
+    transform: unset !important;
+}
