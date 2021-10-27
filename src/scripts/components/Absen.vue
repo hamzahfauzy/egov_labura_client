@@ -7,20 +7,19 @@
             <div class="card-bg preload-img" data-src="images/pictures/20s.jpg"></div>
         </div>
 
-        <div class="card card-style">
+        <!-- <div class="card card-style">
             <div class="card-body">
                 <p class="mb-1">
                     Absen {{page_type}} digunakan untuk absen jika anda berada di {{page_type=='Luar Lokas'?'luar':''}} wilayah kantor Anda
                 </p>
             </div>
-        </div>
+        </div> -->
         
         <div class="card card-style">
             <div class="content mt-0 mb-0">
                 <div class="list-group list-custom-small list-icon-0">
                     <template v-for="(absen,key) in absen_items">
                         <button @click="launchCamera(absen.name)" :key="key" v-if="!absen.type || absen.type == page_type">
-                            <i class="fa fa-star color-yellow-dark"></i>
                             <span>{{absen.name}}</span>
                         </button>
                     </template>
@@ -32,8 +31,6 @@
             <gmaps-marker :position="{ lat: -27, lng: 153 }" />
         </gmaps-map> -->
 
-        <!-- footer and footer card-->
-        <menu-footer></menu-footer>
         <camera ref="camera"></camera>
         <textbox ref="textbox" title="Absen Luar Lokasi"></textbox>
         <full-maps :lat="lat" :lng="lng" ref="maps"></full-maps>
@@ -41,9 +38,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-// import { gmapsMap, gmapsMarker } from 'x5-gmaps'
 export default {
-    // components: { gmapsMap, gmapsMarker },
     data(){
         return {
             pageTitle:'Absen',

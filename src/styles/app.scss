@@ -13,7 +13,8 @@
 }
 
 .bg-highlight, .footer-bar-2 .active-nav, .footer-bar-5 strong, .footer-bar-4 strong, .splide__pagination__page.is-active {
-    background-color: #37BC9B !important;
+    // background-color: #37BC9B !important;
+    background-color: #f3e10d !important;
 }
 
 .preloader-wrapper {
@@ -30,4 +31,8 @@
 
 .page-content {
     transform: unset !important;
+}
+
+.footer-bar {
+    bottom:-1px;
 }

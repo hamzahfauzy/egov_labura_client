@@ -16,6 +16,9 @@ export default {
 
         return false
     },
+    updateAuthData(new_auth_data){
+        window.localStorage.setItem('auth',JSON.stringify(new_auth_data))
+    },
     degreesToRadians(degrees) {
         return degrees * Math.PI / 180;
     },

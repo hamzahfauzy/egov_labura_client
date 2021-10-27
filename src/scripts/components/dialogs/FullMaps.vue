@@ -9,7 +9,7 @@
                     &nbsp;
                     <button @click="refreshMaps" class="close-menu btn btn-center-m btn-sm shadow-l rounded-s text-uppercase font-900 bg-green-dark">Pointing Lokasi</button>
                     &nbsp;
-                    <button @click="oke_btn" class="close-menu btn btn-center-m btn-sm shadow-l rounded-s text-uppercase font-900 bg-green-dark">Oke</button>
+                    <button @click="oke_btn" class="close-menu btn btn-center-m btn-sm shadow-l rounded-s text-uppercase font-900" :class="{'bg-blue-dark':isOnLocation,'bg-light':!isOnLocation}">Ambil Foto</button>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@ export default {
     data(){
         return {
             hidden:true,
-            iframe_src:'',
+            iframe_src:null,
             params:false,
             isOnLocation:false
         }
@@ -35,22 +35,22 @@ export default {
     methods:{
         toggle(params = false){
             this.hidden = false
-            this.$refs.preloader.toggle()
             this.params = params
             this.refreshMaps()
         },
         closeMaps(){
-            this.iframe_src = ''
+            this.iframe_src = null
             this.hidden = true
         },
         closePreloader(){
-            if(this.iframe_src)
-                this.$refs.preloader.toggle()
+            if(this.iframe_src != null)
+                this.$refs.preloader.close()
         },
         refreshMaps(){
+            this.$refs.preloader.toggle()
             if (typeof(Android) != "undefined")
             {
-                this.iframe_src = ''
+                this.iframe_src = null
                 Android.showToast('Refresh GPS')
                 var getLocation = Android.getLocation()
                 getLocation = JSON.parse(getLocation)

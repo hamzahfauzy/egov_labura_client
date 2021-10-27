@@ -31,6 +31,21 @@ export default {
                     resolve(response.data)
                 })
             })
+        },
+        updatePassword({},data){
+            return new Promise(resolve => {
+                var formData = new FormData
+                formData.append('token',data.token)
+                formData.append('new_password',data.new_password)
+                formData.append('nomor_wa',data.nomor_wa)
+                axios.post(env.API_URL + '/ubahpassword',formData,{
+                    method:'POST',
+                })
+                // .then(response => response.json())
+                .then(response => {
+                    resolve(response.data)
+                })
+            })
         }
     },
 };

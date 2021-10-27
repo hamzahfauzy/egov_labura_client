@@ -20,6 +20,12 @@ export default {
     methods:{
         toggle(){
             this.status = !this.status
+        },
+        open(){
+            this.status = true
+        },
+        close(){
+            this.status = false
         }
     }
 }

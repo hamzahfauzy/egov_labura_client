@@ -12,7 +12,7 @@
         </warning>
         <div class="mobile-wrapper" :class="{'hidden':hidden}">
             <preloader ref="preloader"></preloader>
-            <video autoplay="true" id="videoElement"></video>
+            <video autoplay="true" id="videoElement" poster="images/logo-egov-flip.png"></video>
             <div id="result">Memuat...</div>
             <button @click="start(name)" id="btn-absen">Pindai Ulang</button>
         </div>
@@ -96,7 +96,7 @@ export default {
                                     vm.mystream.getTracks().forEach(track => {
                                         track.stop();
                                     });
-                                    vm.successContent = 'Absen berhasil pada ' + e.tanggal + '<br><img width="150px" src="'+srcAbsen+'">'
+                                    vm.successContent = '<span style="display:block;margin-bottom:10px;">'+name+' berhasil <br>Pada ' + e.tanggal + '</span><img width="100px" height="150px" style="object-fit:cover;object-position:center" src="'+srcAbsen+'">'
                                     vm.hidden = true
                                     // setTimeout(() => {
                                         // location.href='/absen/absen_berhasil?token=<?=$_GET['token']?>&id='+e.id

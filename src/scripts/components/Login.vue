@@ -12,10 +12,10 @@
             <div class="footer card card-style mx-0 mb-0">   
 
                 <center>
-                    <img src="images/logo.png" alt="" width="70px" class="mt-4">
+                    <img src="images/logo.png" alt="" width="150px" class="mt-4">
                 </center>
 
-                <a href="#" class="footer-title pt-4 mb-2">E-Gov Labura</a>
+                <a href="#" class="footer-title pt-4 mb-2">eGov Labura</a>
 
                 <form method="post" @submit="doLogin" class="content mb-0">
                     <div class="input-style no-borders has-icon validate-field mb-4">

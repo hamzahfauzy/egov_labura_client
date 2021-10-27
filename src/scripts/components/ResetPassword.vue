@@ -1,7 +1,7 @@
 <template>
     <div class="page-content" v-if="loaderStatus==false">
         <page-title :backBtn="false" pageTitle="" image=""></page-title>
-        <Warning title="Login Gagal!" ref="warningAlert" :content="warningMessage"></Warning>
+        <Warning title="Reset Password Gagal!" ref="warningAlert" :content="warningMessage"></Warning>
         <Success title="Reset Password Berhasil!" ref="successAlert" :content="warningMessage"></Success>
         <preloader ref="preloader"></preloader>
         <div class="card header-card shape-rounded" data-card-height="150">
@@ -16,7 +16,7 @@
                     <img src="images/logo.png" alt="" width="70px" class="mt-4">
                 </center>
 
-                <a href="#" class="footer-title pt-4 mb-2">E-Gov Labura</a>
+                <a href="#" class="footer-title pt-4 mb-2">eGov Labura</a>
 
                 <form method="post" @submit="doLogin" class="content mb-0">
                     <div class="input-style no-borders has-icon validate-field mb-4">

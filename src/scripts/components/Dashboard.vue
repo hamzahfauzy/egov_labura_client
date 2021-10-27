@@ -26,25 +26,23 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-6" v-for="(service,index) in services" :key="index">
-                <router-link :to="service.type_content">
-                <div class="card bg-20 mt-4 content rounded-m shadowl">
-                    <div class="card-body text-center">
-                        <h4 class="color-white">{{service.label}}</h4>
-                        <p class="color-white">
-                            {{service.description}}
-                        </p>
-                    </div>
-                    <div class="card-overlay gradient-green opacity-95 rounded-m shadow-l"></div>
-                    <div class="card-overlay dark-mode-tint rounded-m shadow-l"></div>
-                </div>
-                </router-link>
+        <router-link v-for="(service,index) in services" :key="index" :to="service.type_content" class="card card-style mb-3">
+        <div class="d-flex pt-3 pb-3">
+            <div class="mt-2 ps-3 ms-2">
+                <h1 class="center-text" v-html="service.icon"></h1>
+            </div>
+            <div class="pt-2 mt-1 ps-4">
+                <h4 class="color-theme font-600">{{service.label}}</h4>
+                <p class="mt-n2 font-11 color-highlight mb-2">
+                    {{service.description}}
+                </p>
+            </div>
+            <div class="ms-auto align-self-center me-3">
+                <span class="badge bg-highlight color-white font-10 py-1 px-2"><span class="fa-fw select-all fas"></span></span>
             </div>
         </div>
+        </router-link>
 
-        <!-- footer and footer card-->
-        <menu-footer></menu-footer>
     </div>
 </template>
 <script>
@@ -60,14 +58,16 @@ export default {
             ],
             services:[
                 {
+                    icon:'<i data-feather="target" data-feather-line="1" data-feather-size="50" data-feather-color="green-dark" data-feather-bg="green-fade-light"></i>',
                     label:'Absen Sekarang',
-                    description:'Klik untuk absen jika berada di wilayah',
+                    description:'Absen jika di lokasi kantor',
                     type:'route',
                     type_content:{name:'Absen',params:{type:'Sekarang'}}
                 },
                 {
+                    icon:'<i data-feather="map-pin" data-feather-line="1" data-feather-size="50" data-feather-color="red-dark" data-feather-bg="red-fade-light"></i>',
                     label:'Absen Luar Lokasi',
-                    description:'Klik untuk absen di luar wilayah kantor',
+                    description:'Absen jika diluar lokasi kantor',
                     type:'route',
                     type_content:{name:'Absen',params:{type:'Luar Lokasi'}}
                 }
@@ -82,6 +82,7 @@ export default {
     },
     created(){
         this.randomString = (Math.random() + 1).toString(36).substring(7);
+        this.$store.dispatch('nav/setActiveNav','home')
     },
     mounted(){
         var vm = this

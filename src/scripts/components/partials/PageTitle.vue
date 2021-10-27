@@ -4,7 +4,7 @@
             <button @click="back" v-if="backBtn"><i class="fa fa-arrow-left"></i></button> &nbsp;
             {{pageTitle}}
         </h2>
-        <a href="#" data-menu="menu-main" class="bg-fade-highlight-light shadow-xl preload-img" :data-src="image"></a>
+        <!-- <a href="#" data-menu="menu-main" class="bg-fade-highlight-light shadow-xl preload-img" :data-src="image"></a> -->
     </div>
 </template>
 <script>
