@@ -17,7 +17,13 @@ export default {
         return false
     },
     updateAuthData(new_auth_data){
-        window.localStorage.setItem('auth',JSON.stringify(new_auth_data))
+        var auth_data = window.localStorage.getItem('auth')
+        if(auth_data)
+        {
+            auth_data = JSON.parse(auth_data)
+            auth_data.data = new_auth_data
+            window.localStorage.setItem('auth',JSON.stringify(auth_data))
+        }
     },
     degreesToRadians(degrees) {
         return degrees * Math.PI / 180;

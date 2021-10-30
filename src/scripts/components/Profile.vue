@@ -12,6 +12,7 @@
             ref="warningAlert" 
             :content="alertContent">
         </warning>
+        <preloader ref="updatePreloader"></preloader>
         <div class="card header-card shape-rounded" data-card-height="150">
             <div class="card-overlay bg-highlight opacity-95"></div>
             <div class="card-overlay dark-mode-tint"></div>
@@ -54,7 +55,7 @@
                 <h3 class="font-600">Update Identitas</h3>
                 <p>Isi form di bawah ini untuk mengupdate identitas anda</p>
                 <div class="input-style has-borders hnoas-icon input-style-always-active validate-field mb-4">
-                    <input type="text" v-model="nomor_wa" class="form-control validate-name" id="form1">
+                    <input type="tel" v-model="nomor_wa" class="form-control validate-name" id="form1">
                     <label for="form1" class="color-highlight font-400 font-13">Nomor WA Baru</label>
                     <i class="fa fa-check disabled invalid color-green-dark"></i>
                     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -79,12 +80,13 @@ export default {
         return {
             auth:null,
             nomor_wa:null,
-            new_password:null,
+            new_password:'',
             alertContent:'',
         }
     },
     methods:{
         updatePassword(){
+            this.$refs.updatePreloader.toggle()
             this.$store.dispatch('auth/updatePassword',{
                 token:this.auth.token,
                 nomor_wa:this.nomor_wa,
@@ -94,20 +96,25 @@ export default {
                 this.alertContent = response.pesan
                 if(response.status == 'berhasil')
                 {
-                    this.new_password = null
+                    this.new_password = ''
                     this.$refs.successAlert.toggle()
                     
                     this.$helpers.updateAuthData(response.auth_data)
+                    this.init()
                 }
                 else
                     this.$refs.warningAlert.toggle()
+                this.$refs.updatePreloader.toggle()
             })
+        },
+        init(){
+            this.auth = this.$helpers.auth()
+            this.nomor_wa = this.auth.nomor_wa
         }
     },
     created(){
         this.$store.dispatch('nav/setActiveNav','profil')
-        this.auth = this.$helpers.auth()
-        this.nomor_wa = this.auth.nomor_wa
+        this.init()
     },
     mounted(){
         var vm = this

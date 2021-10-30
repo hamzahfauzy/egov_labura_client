@@ -20,7 +20,7 @@
                 <form method="post" @submit="doLogin" class="content mb-0">
                     <div class="input-style no-borders has-icon validate-field mb-4">
                         <i class="fa fa-user"></i>
-                        <input type="name" v-model="auth.username" class="form-control" id="form1a" placeholder="NIP/NIK">
+                        <input type="tel" v-model="auth.username" class="form-control" id="form1a" placeholder="NIP/NIK">
                         <label for="form1a" class="color-blue-dark font-10 mt-1">NIP / NIK</label>
                         <i class="fa fa-check disabled invalid color-green-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>

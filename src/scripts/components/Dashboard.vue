@@ -11,8 +11,8 @@
         <div class="splide single-slider slider-no-arrows slider-no-dots homepage-slider" id="single-slider-1">
             <div class="splide__track">
                 <div class="splide__list">
-                    <div class="splide__slide" v-for="slide in sliders" :key="slide">
-                        <div class="card rounded-l mx-2 text-center shadow-l" :style="{backgroundImage:'url('+slide+'&random='+randomString+')'}" data-card-height="320">
+                    <div class="splide__slide" v-for="(slide,idx) in sliders" :key="idx" @click="redirect(slide.post_url)">
+                        <div class="card rounded-l mx-2 text-center shadow-l" :style="{backgroundImage:'url('+slide.thumb+'?random='+randomString+')'}" data-card-height="320">
                             <div class="card-bottom">
                                 <h1 class="font-24 font-700"> </h1>
                                 <p class="boxed-text-xl">
@@ -52,9 +52,18 @@ export default {
         return {
             randomString:'',
             sliders:[
-                'https://storage.googleapis.com/slider-layanan/slider1.jpg?nocache=true',
-                'https://storage.googleapis.com/slider-layanan/slider2.jpg?nocache=true',
-                'https://storage.googleapis.com/slider-layanan/slider3.jpg?nocache=true',
+                {
+                    "thumb":"images/logo.png",
+                    "post_url":"#"
+                },
+                {
+                    "thumb":"images/logo.png",
+                    "post_url":"#"
+                },
+                {
+                    "thumb":"images/logo.png",
+                    "post_url":"#"
+                }
             ],
             services:[
                 {
@@ -80,9 +89,20 @@ export default {
             ]
         }
     },
-    created(){
+    async created(){
         this.randomString = (Math.random() + 1).toString(36).substring(7);
         this.$store.dispatch('nav/setActiveNav','home')
+        // var vm = this
+
+        var request = await fetch('https://storage.googleapis.com/slider-layanan-egov/slider.json?no-cache=true')
+        var response = await request.json()
+        this.sliders = response
+    },
+    methods:{
+        redirect(url){
+            if(url == '#') return
+            location.href=url
+        }
     },
     mounted(){
         var vm = this
