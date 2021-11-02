@@ -66,6 +66,7 @@ export default {
 
                             var formData = new FormData;
                             formData.append('username',auth.username)
+                            formData.append('nama',auth.nama)
                             formData.append('user_id',auth.user_id)
                             formData.append('skpd_id',auth.skpd_id)
                             formData.append('nama_opd',auth.nama_opd)
