@@ -26,6 +26,7 @@
                 <div class="list-group list-custom-small list-icon-0">
                     <template v-for="(absen,key) in absen_items">
                         <button @click="launchCamera(absen.name)" :key="key" v-if="!absen.type || absen.type == page_type">
+                            <img :src="absen.icon" alt="" width="30px" height="30px" style="objec-fit:contain">
                             <span>{{absen.name}}</span>
                         </button>
                     </template>
@@ -58,12 +59,12 @@ export default {
             upacara_status:false,
             senam_status:false,
             absen_items:[
-                {name:'Absen Masuk'},
-                {name:'Absen Istirahat'},
-                {name:'Absen Selesai Istirahat'},
-                {name:'Absen Pulang'},
-                {name:'Absen Upacara',type:'Luar Lokasi'},
-                {name:'Absen Senam',type:'Luar Lokasi'},
+                {name:'Absen Masuk',icon:'images/icons/masuk.png'},
+                {name:'Absen Istirahat',icon:'images/icons/istirahat.png'},
+                {name:'Absen Selesai Istirahat',icon:'images/icons/selesai-istirahat.png'},
+                {name:'Absen Pulang',icon:'images/icons/pulang.png'},
+                {name:'Absen Upacara',icon:'images/icons/upacara.png',type:'Luar Lokasi'},
+                {name:'Absen Senam',icon:'images/icons/senam.png',type:'Luar Lokasi'},
             ]
         }
     },

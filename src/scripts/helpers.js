@@ -34,8 +34,8 @@ export default {
         var dLat = this.degreesToRadians(coor2.lat-coor1.lat);
         var dLon = this.degreesToRadians(coor2.lng-coor1.lng);
         
-        lat1 = this.degreesToRadians(coor1.lat);
-        lat2 = this.degreesToRadians(coor2.lat);
+        var lat1 = this.degreesToRadians(coor1.lat);
+        var lat2 = this.degreesToRadians(coor2.lat);
         
         var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                 Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(coor1.lat) * Math.cos(coor2.lat); 

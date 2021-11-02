@@ -94,7 +94,7 @@ export default {
         this.$store.dispatch('nav/setActiveNav','home')
         // var vm = this
 
-        var request = await fetch('https://storage.googleapis.com/slider-layanan-egov/slider.json?no-cache=true')
+        var request = await fetch('https://storage.googleapis.com/slider-layanan-egov/slider.json?no-cache=true&random='+this.randomString)
         var response = await request.json()
         this.sliders = response
     },
