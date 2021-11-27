@@ -1,7 +1,15 @@
 import Login from './components/Login'
 import ResetPassword from './components/ResetPassword'
 import Dashboard from './components/Dashboard'
-import Absen from './components/Absen'
+import Notification from './components/Notification'
+
+import Absen from './components/absensi/Absen'
+import LogAbsen from './components/absensi/LogAbsen'
+
+import IzinKerja from './components/izinkerja/IzinKerja'
+import IzinKerjaBawahan from './components/izinkerja/IzinKerjaBawahan'
+import BuatIzinKerja from './components/izinkerja/BuatIzinKerja'
+
 import Profile from './components/Profile'
 import Bantuan from './components/Bantuan'
 import helpers from './helpers'
@@ -20,6 +28,21 @@ export default [
         },
         meta: {
             title: 'Dashboard - E-Gov Labura'
+        }
+    },
+    {
+        name:'Notification',
+        path: '/notifications', 
+        component: Notification,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Notifications - E-Gov Labura'
         }
     },
     {
@@ -65,6 +88,66 @@ export default [
         },
         meta: {
             title: 'Absen - E-Gov Labura'
+        }
+    },
+    {
+        name:'LogAbsen',
+        path: '/log-absen', 
+        component: LogAbsen,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Log Absen - E-Gov Labura'
+        }
+    },
+    {
+        name:'IzinKerja',
+        path: '/izin-kerja', 
+        component: IzinKerja,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Izin Kerja - E-Gov Labura'
+        }
+    },
+    {
+        name:'BuatIzinKerja',
+        path: '/izin-kerja/create', 
+        component: BuatIzinKerja,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Buat Izin Kerja - E-Gov Labura'
+        }
+    },
+    {
+        name:'IzinKerjaBawahan',
+        path: '/izin-kerja/bawahan', 
+        component: IzinKerjaBawahan,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Izin Kerja Bawahan - E-Gov Labura'
         }
     },
     {

@@ -79,6 +79,20 @@ export default {
                     description:'Absen jika diluar lokasi kantor',
                     type:'route',
                     type_content:{name:'Absen',params:{type:'Luar Lokasi'}}
+                },
+                {
+                    icon:'<i data-feather="life-buoy" data-feather-line="1" data-feather-size="50" data-feather-color="blue-dark" data-feather-bg="blue-fade-light"></i>',
+                    label:'Log Absen',
+                    description:'Daftar log absensi pegawai',
+                    type:'route',
+                    type_content:{name:'LogAbsen'}
+                },
+                {
+                    icon:'<i data-feather="edit" data-feather-line="1" data-feather-size="50" data-feather-color="green-dark" data-feather-bg="green-fade-light"></i>',
+                    label:'Izin Kerja',
+                    description:'Lihat dan Buat Izin Kerja',
+                    type:'route',
+                    type_content:{name:'IzinKerja'}
                 }
                 // ,
                 // {

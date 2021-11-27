@@ -159,7 +159,6 @@ video, canvas {
 .mobile-wrapper {
     margin:auto;
     width:100%;
-    max-width:500px;
     height:100vh;
     overflow:hidden;
     position:fixed;

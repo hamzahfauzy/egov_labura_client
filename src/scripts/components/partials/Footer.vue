@@ -23,6 +23,11 @@ export default {
     },
     methods:{
         doLogout(){
+            if (typeof(Android) != "undefined")
+            {
+                var auth = this.$helpers.auth()
+                Android.unsubscribeFrom(auth.user_id)
+            }
             this.$store.dispatch('auth/doLogout').then(() => {
                 this.$router.push({name:'Login'})
             })

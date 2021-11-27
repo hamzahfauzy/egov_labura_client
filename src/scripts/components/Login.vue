@@ -93,12 +93,19 @@ export default {
                 {
                     if(response.pesan == 'User tidak ditemukan!')
                         this.warningMessage = "NIP / NIK tidak ditemukan!"
+                    else 
+                        this.warningMessage = response.pesan
 
                     this.$refs.warningAlert.toggle()
                 }
                 else
                 {
                     window.localStorage.setItem('auth',JSON.stringify(response))
+                    if (typeof(Android) != "undefined")
+                    {
+                        var auth = this.$helpers.auth()
+                        Android.subscribeTo(auth.user_id)
+                    }
                     this.$router.push({name:'Dashboard'})
                 }
             }).catch (error => {
