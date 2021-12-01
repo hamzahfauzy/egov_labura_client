@@ -4,6 +4,8 @@ import Dashboard from './components/Dashboard'
 import Notification from './components/Notification'
 
 import Absen from './components/absensi/Absen'
+import ListAbsenLuar from './components/absensi/ListAbsenLuar'
+import ListAbsenLuarBawahan from './components/absensi/ListAbsenLuarBawahan'
 import LogAbsen from './components/absensi/LogAbsen'
 
 import IzinKerja from './components/izinkerja/IzinKerja'
@@ -27,7 +29,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Dashboard - E-Gov Labura'
+            title: 'Dashboard'
         }
     },
     {
@@ -42,7 +44,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Notifications - E-Gov Labura'
+            title: 'Notifications'
         }
     },
     {
@@ -57,7 +59,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Login - E-Gov Labura'
+            title: 'Login'
         }
     },
     {
@@ -72,7 +74,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Reset Password - E-Gov Labura'
+            title: 'Reset Password'
         }
     },
     {
@@ -87,7 +89,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Absen - E-Gov Labura'
+            title: 'Absen'
         }
     },
     {
@@ -102,7 +104,37 @@ export default [
                 next()
         },
         meta: {
-            title: 'Log Absen - E-Gov Labura'
+            title: 'Log Absen'
+        }
+    },
+    {
+        name:'ListAbsenLuar',
+        path: '/absen-luar-lokasi', 
+        component: ListAbsenLuar,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Absen Luar Lokasi'
+        }
+    },
+    {
+        name:'ListAbsenLuarBawahan',
+        path: '/absen-luar-lokasi-bawahan', 
+        component: ListAbsenLuarBawahan,
+        beforeEnter(to, from, next) {
+            var auth = helpers.auth()
+            if(!auth)
+                next({name:'Login'})
+            else
+                next()
+        },
+        meta: {
+            title: 'Absen Bawahan'
         }
     },
     {
@@ -117,7 +149,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Izin Kerja - E-Gov Labura'
+            title: 'Izin Kerja'
         }
     },
     {
@@ -132,7 +164,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Buat Izin Kerja - E-Gov Labura'
+            title: 'Buat Izin Kerja'
         }
     },
     {
@@ -147,7 +179,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Izin Kerja Bawahan - E-Gov Labura'
+            title: 'Izin Kerja Bawahan'
         }
     },
     {
@@ -162,7 +194,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Profile - E-Gov Labura'
+            title: 'Profile'
         }
     },
     {
@@ -177,7 +209,7 @@ export default [
                 next()
         },
         meta: {
-            title: 'Bantuan - E-Gov Labura'
+            title: 'Bantuan'
         }
     }
     

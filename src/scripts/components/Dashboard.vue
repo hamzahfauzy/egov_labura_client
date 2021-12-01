@@ -81,6 +81,13 @@ export default {
                     type_content:{name:'Absen',params:{type:'Luar Lokasi'}}
                 },
                 {
+                    icon:'<i data-feather="life-buoy" data-feather-line="1" data-feather-size="50" data-feather-color="yellow-dark" data-feather-bg="yellow-fade-light"></i>',
+                    label:'Log Absen Luar',
+                    description:'Daftar log absensi luar lokasi pegawai',
+                    type:'route',
+                    type_content:{name:'ListAbsenLuar'}
+                },
+                {
                     icon:'<i data-feather="life-buoy" data-feather-line="1" data-feather-size="50" data-feather-color="blue-dark" data-feather-bg="blue-fade-light"></i>',
                     label:'Log Absen',
                     description:'Daftar log absensi pegawai',

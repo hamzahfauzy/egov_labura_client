@@ -7,12 +7,13 @@
             :content="warning.content">
         </warning>
         <success 
-            :title="logabsen.title" 
+            :title="success.title" 
             ref="successAlert" 
-            :content="logabsen.content">
+            height="250"
+            :content="success.content">
         </success>
 
-        <preloader ref="logabsenpreloader"></preloader>
+        <preloader ref="izinpreloader"></preloader>
         <div class="card header-card shape-rounded" data-card-height="150">
             <div class="card-overlay bg-highlight opacity-95"></div>
             <div class="card-overlay dark-mode-tint"></div>
@@ -21,9 +22,9 @@
 
         <div class="card card-style">
             <div class="content mb-0">        
-                <h3>Filter Log Absen</h3>
+                <h3>Filter Absen Luar Lokasi Bawahan</h3>
                 <p>
-                    Pilih Bulan dan Tahun untuk memfilter Log Absen Pegawai
+                    Pilih Bulan dan Tahun untuk memfilter Absen Luar Lokasi Pegawai
                 </p>
                 
                 <div class="input-style input-style-always-active has-borders no-icon validate-field mb-4">
@@ -47,6 +48,18 @@
 
                 <div class="pb-3"></div>
 
+                <div class="input-style input-style-always-active has-borders no-icon validate-field mb-4">
+                    <select class="form-control validate-name" name="status" id="status" v-model="periode.status" style="text-transform:capitalize;">
+                        <option value="">-Pilih Status-</option>
+                        <option v-for="status in ['menunggu','disetujui','ditolak']" :key="status" :value="status">{{status}}</option>
+                    </select>
+                    <label for="form1ab" class="color-theme opacity-50 text-uppercase font-700 font-10">Status</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                </div>
+
+                <div class="pb-3"></div>
+
                 <button class="btn btn-m btn-full mb-3 rounded-xl text-uppercase font-900 shadow-s bg-yellow-light" style="width:100%" @click="filterLog">Lihat</button>
 
             </div>
@@ -54,9 +67,9 @@
 
         <div class="card card-style" v-if="logs.length">
             <div class="content">
-                <h4>Log Absen Anda</h4>
+                <h4>Absen Luar Lokasi Bawahan</h4>
                 <p>
-                    Log absen anda pada bulan {{periode.bulan}} dan tahun {{periode.tahun}}
+                    Absen Luar Lokasi bawahan pada bulan {{periode.bulan}} dan tahun {{periode.tahun}}
                 </p>
             </div>
 
@@ -64,64 +77,34 @@
                 <div class="card card-style shadow-0 bg-highlight mb-1" v-for="(log,i) in logs" :key="i">
                     <button class="btn accordion-btn color-white no-effect collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse'+i" aria-expanded="false">
                         <i class="fas fa-calendar-check me-2"></i>
-                        {{log.hari}}
+                        {{log.dibuat_pada}}
                         <i class="fa fa-chevron-down font-10 accordion-icon"></i>
                     </button>
 
-                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="" v-if="log.absensi">
-                        <div class="vcard-field" v-if="log.absensi.masuk" @click="showLogAbsenImage(log.absensi.masuk.lampiran)">
-                            <strong>Masuk</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.masuk.waktu}}
-                                <span v-if="log.absensi.masuk.diluar_lokasi && log.absensi.masuk.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.masuk.diluar_lokasi && log.absensi.masuk.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.masuk.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
+                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="">
+                        <div class="vcard-field" @click="showLogAbsenImage(log.link_absensi)">
+                            {{log.jenis_absen}}
                         </div>
-                        <div class="vcard-field" v-if="log.absensi.istirahat" @click="showLogAbsenImage(log.absensi.istirahat.lampiran)">
-                            <strong>Istirahat</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.istirahat.waktu}}
-                                <span v-if="log.absensi.istirahat.diluar_lokasi && log.absensi.istirahat.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.istirahat.diluar_lokasi && log.absensi.istirahat.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.istirahat.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
+                        <div class="row mb-0" v-if="log.status == 'Menunggu'">
+                            <div class="col-4 pe-1">
+                                <a href="javascript:void(0)" @click="tolak(log)" class="btn btn-3d btn-s btn-full mb-3 rounded-xs text-uppercase font-900 shadow-s border-red-dark bg-red-light">Tolak</a>
+                            </div>
+                            <div class="col-4 ps-1 pe-1">
+                                <a href="javascript:void(0)" @click="terima(log)" class="btn btn-3d btn-s btn-full mb-3 rounded-xs text-uppercase font-900 shadow-s  border-green-dark bg-green-light">Terima</a>
+                            </div>
+                            <div class="col-4 ps-1">
+                                <a href="javascript:void(0)" @click="showLogAbsenImage(log.link_absensi)" class="btn btn-3d btn-s btn-full mb-3 rounded-xs text-uppercase font-900 shadow-s  border-blue-dark bg-blue-light">Lihat</a>
+                            </div>
                         </div>
-                        <div class="vcard-field" v-if="log.absensi.selesai_istirahat" @click="showLogAbsenImage(log.absensi.selesai_istirahat.lampiran)">
-                            <strong>Selesai Istirahat</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.selesai_istirahat.waktu}}
-                                <span v-if="log.absensi.selesai_istirahat.diluar_lokasi && log.absensi.selesai_istirahat.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.selesai_istirahat.diluar_lokasi && log.absensi.selesai_istirahat.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.selesai_istirahat.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                        <div class="vcard-field" v-if="log.absensi.pulang" @click="showLogAbsenImage(log.absensi.pulang.lampiran)">
-                            <strong>Pulang</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.pulang.waktu}}
-                                <span v-if="log.absensi.pulang.diluar_lokasi && log.absensi.pulang.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.pulang.diluar_lokasi && log.absensi.pulang.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.pulang.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
+                        <div v-else>
+                            <a href="javascript:void(0)" @click="showLogAbsenImage(log.link_absensi)" class="btn btn-3d btn-s btn-full mb-3 rounded-xs text-uppercase font-900 shadow-s  border-blue-dark bg-blue-light">Lihat</a>
                         </div>
                     </div>
-
-                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="" v-if="log.izin_kerja">
-                        <div class="vcard-field" @click="openUrl(log.izin_kerja.lampiran)">
-                            <strong>{{log.izin_kerja.jenis_izin}}</strong>
-                            <a href="javascript:void(0)">
-                                Lampiran
-                            </a>
-                            <span v-if="log.izin_kerja.disetujui_oleh">(Disetujui Oleh {{log.izin_kerja.disetujui_oleh}})</span>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="pb-3"></div>
         </div>
+
     </div>
 </template>
 <script>
@@ -129,8 +112,12 @@ import { mapGetters } from 'vuex'
 export default {
     data(){
         return {
-            auth:null,
-            pageTitle:'Log Absen',
+            pageTitle:'Absen Bawahan',
+            badges:{
+                'Menunggu':'bg-yellow-light',
+                'Disetujui':'bg-green-light',
+                'Ditolak':'bg-red-light',
+            },
             logs:[],
             list_bulan:[
                 {
@@ -185,23 +172,24 @@ export default {
             periode:{
                 bulan:'',
                 tahun:'',
+                status:'',
             },
-            bulan:'',
             warning:{
                 title:'',
                 content:''
             },
-            logabsen:{
+            success:{
                 title:'',
                 content:''
-            }
+            },
+            auth:{}
         }
     },
     created(){
         this.auth = this.$helpers.auth()
     },
     methods:{
-        async filterLog(){
+        async filterLog(s = true){
             if(this.periode.bulan == '' && this.periode.tahun == '')
             {
                 this.warning = {
@@ -212,12 +200,13 @@ export default {
                 return
             }
 
-            this.$refs.logabsenpreloader.toggle()
+            if(s) this.$refs.izinpreloader.toggle()
 
-            var request = await this.$store.dispatch('absen/getLogAbsen',{
+            var request = await this.$store.dispatch('absen/getAbsenLuarBawahan',{
                 bulan: this.periode.bulan+'-'+this.periode.tahun,
                 pegawai_id: this.auth.user_id,
-                jenis_pegawai: this.auth.jenis_pegawai
+                jenis_pegawai: this.auth.jenis_pegawai,
+                status:this.periode.status
             })
             
             if(request.status == 'berhasil')
@@ -225,18 +214,61 @@ export default {
                 this.logs = request.data
             }
 
-            this.$refs.logabsenpreloader.toggle()
+            if(s) this.$refs.izinpreloader.toggle()
         },
         showLogAbsenImage(url){
-            this.logabsen = {
-                title:'Foto Absensi Anda',
-                content:'<img src="'+url+'" width="200px" height="200px" style="object-fit:cover;">'
-            }
-
-            this.$refs.successAlert.toggle()
-        },
-        openUrl(url){
             window.open(url)
+
+        },
+        async tolak(log){
+            this.$refs.izinpreloader.toggle()
+            var request = await this.$store.dispatch('absen/tolakAbsen',log)
+            if(request.status == 'berhasil')
+            {
+                this.$refs.izinpreloader.toggle()
+                this.success = {
+                    title:'Berhasil',
+                    content:request.pesan
+                }
+
+                this.$refs.successAlert.toggle()
+
+                this.filterLog(false)
+            }
+            else
+            {
+                this.warning = {
+                    title:'Gagal',
+                    content:request.pesan
+                }
+
+                this.$refs.warningAlert.toggle()
+            }
+        },
+        async terima(log){
+            this.$refs.izinpreloader.toggle()
+            var request = await this.$store.dispatch('absen/terimaAbsen',log)
+            if(request.status == 'berhasil')
+            {
+                this.$refs.izinpreloader.toggle()
+                this.success = {
+                    title:'Berhasil',
+                    content:request.pesan
+                }
+
+                this.$refs.successAlert.toggle()
+
+                this.filterLog(false)
+            }
+            else
+            {
+                this.warning = {
+                    title:'Gagal',
+                    content:request.pesan
+                }
+
+                this.$refs.warningAlert.toggle()
+            }
         }
     },
     mounted(){
@@ -255,6 +287,44 @@ export default {
 }
 </script>
 <style scoped>
+.list-custom-small button {
+    text-align: left;
+    color: #1f1f1f;
+    font-weight: 600;
+    font-size: 13px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+}
+
+.fab {
+    position:fixed;
+    bottom:0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 60px;
+    z-index:11;
+}
+
+.fab a {
+    text-align: center;
+    border:0;
+    display: block;
+    padding:15px;
+    margin-bottom:15px;
+    font-size: 25px;
+    border-radius:100%;
+    color:#FFF;
+    width: 55px;
+    box-shadow: 3px 3px 6px 0px rgb(0 0 0 / 30%);;
+}
+
+.btn-create-izin {
+    background-color:rgba(74, 137, 220, 1);
+}
+
+.btn-verif-izin {
+    background-color:rgb(212, 199, 77);
+}
+
 .collapse,.collapsing {
     padding:10px;
 }

@@ -10,11 +10,11 @@
 
         <div class="card card-style">
             <div class="content mt-0 mb-0">
-                <div class="list-group list-custom-small list-icon-0" v-if="notifications.length">
+                <div class="list-group list-custom-small list-icon-0" v-if="notifications != []">
                     <template v-for="(notif,key) in notifications">
-                        <button :key="key" style="line-height:2;padding-top:10px;padding-bottom:10px;">
-                            <small style="color:#666"><i class="fa fa-clock fa-fw" style="line-height:1;"></i> {{notif.receive_at}}</small><br>
-                            <span>{{notif.notification.contents}}</span>
+                        <button :key="key" style="line-height:2;padding-top:10px;padding-bottom:10px;" @click="openUrl(notif.url, $event)">
+                            <small style="color:#666"><i class="fa fa-clock fa-fw" style="line-height:1;"></i> {{notif.tanggal}}</small><br>
+                            <span style="font-weight:300" v-html="notif.contents"></span>
                         </button>
                     </template>
                 </div>      
@@ -40,14 +40,15 @@ export default {
     async created(){
         // this.$refs.vpreloader.toggle()
         var auth = this.$helpers.auth()
-        var request = await this.$store.dispatch('notification/getNotif',{
-            user_id:auth.user_id
-        })
-
+        var request = await this.$store.dispatch('notification/getNotif',auth)
         this.notifications = request
         // this.$refs.vpreloader.toggle()
     },
     methods:{
+        openUrl(url, ev){
+            if(url != "" && ev.target.tagName.toLowerCase() != 'a')
+                window.open(url)
+        }
     },
     mounted(){
         var vm = this

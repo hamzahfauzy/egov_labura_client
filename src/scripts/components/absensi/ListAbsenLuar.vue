@@ -21,9 +21,9 @@
 
         <div class="card card-style">
             <div class="content mb-0">        
-                <h3>Filter Log Absen</h3>
+                <h3>Filter Absen Luar Lokasi Saya</h3>
                 <p>
-                    Pilih Bulan dan Tahun untuk memfilter Log Absen Pegawai
+                    Pilih Bulan dan Tahun untuk memfilter Absen Luar Lokasi Pegawai
                 </p>
                 
                 <div class="input-style input-style-always-active has-borders no-icon validate-field mb-4">
@@ -54,9 +54,9 @@
 
         <div class="card card-style" v-if="logs.length">
             <div class="content">
-                <h4>Log Absen Anda</h4>
+                <h4>Absen Luar Lokasi Anda</h4>
                 <p>
-                    Log absen anda pada bulan {{periode.bulan}} dan tahun {{periode.tahun}}
+                    absen luar lokasi anda pada bulan {{periode.bulan}} dan tahun {{periode.tahun}}
                 </p>
             </div>
 
@@ -64,63 +64,27 @@
                 <div class="card card-style shadow-0 bg-highlight mb-1" v-for="(log,i) in logs" :key="i">
                     <button class="btn accordion-btn color-white no-effect collapsed" data-bs-toggle="collapse" :data-bs-target="'#collapse'+i" aria-expanded="false">
                         <i class="fas fa-calendar-check me-2"></i>
-                        {{log.hari}}
+                        {{log.dibuat_pada}}
                         <i class="fa fa-chevron-down font-10 accordion-icon"></i>
                     </button>
 
-                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="" v-if="log.absensi">
-                        <div class="vcard-field" v-if="log.absensi.masuk" @click="showLogAbsenImage(log.absensi.masuk.lampiran)">
-                            <strong>Masuk</strong>
+                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="">
+                        <div class="vcard-field" @click="showLogAbsenImage(log.link_absensi)">
+                            <strong>{{log.jenis_absen}}</strong>
                             <a href="javascript:void(0)">
-                                {{log.absensi.masuk.waktu}}
-                                <span v-if="log.absensi.masuk.diluar_lokasi && log.absensi.masuk.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.masuk.diluar_lokasi && log.absensi.masuk.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.masuk.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                        <div class="vcard-field" v-if="log.absensi.istirahat" @click="showLogAbsenImage(log.absensi.istirahat.lampiran)">
-                            <strong>Istirahat</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.istirahat.waktu}}
-                                <span v-if="log.absensi.istirahat.diluar_lokasi && log.absensi.istirahat.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.istirahat.diluar_lokasi && log.absensi.istirahat.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.istirahat.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                        <div class="vcard-field" v-if="log.absensi.selesai_istirahat" @click="showLogAbsenImage(log.absensi.selesai_istirahat.lampiran)">
-                            <strong>Selesai Istirahat</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.selesai_istirahat.waktu}}
-                                <span v-if="log.absensi.selesai_istirahat.diluar_lokasi && log.absensi.selesai_istirahat.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.selesai_istirahat.diluar_lokasi && log.absensi.selesai_istirahat.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.selesai_istirahat.disetujui_oleh}})</span>
-                            </a>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                        <div class="vcard-field" v-if="log.absensi.pulang" @click="showLogAbsenImage(log.absensi.pulang.lampiran)">
-                            <strong>Pulang</strong>
-                            <a href="javascript:void(0)">
-                                {{log.absensi.pulang.waktu}}
-                                <span v-if="log.absensi.pulang.diluar_lokasi && log.absensi.pulang.disetujui_oleh == null">(Luar Lokasi)</span>
-                                <span v-if="log.absensi.pulang.diluar_lokasi && log.absensi.pulang.disetujui_oleh">(Luar Lokasi, Disetujui Oleh {{log.absensi.pulang.disetujui_oleh}})</span>
+                                {{log.aproved_by_nama}}
+                                <span :class="'badge '+badges[log.status]">{{log.status}}</span>
                             </a>
                             <i class="fas fa-check-circle color-facebook"></i>
                         </div>
                     </div>
-
-                    <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="" v-if="log.izin_kerja">
-                        <div class="vcard-field" @click="openUrl(log.izin_kerja.lampiran)">
-                            <strong>{{log.izin_kerja.jenis_izin}}</strong>
-                            <a href="javascript:void(0)">
-                                Lampiran
-                            </a>
-                            <span v-if="log.izin_kerja.disetujui_oleh">(Disetujui Oleh {{log.izin_kerja.disetujui_oleh}})</span>
-                            <i class="fas fa-check-circle color-facebook"></i>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="pb-3"></div>
+        </div>
+
+        <div class="fab">
+            <router-link :to="{name:'ListAbsenLuarBawahan'}" class="btn-verif-izin"><i class="fa fa-user-check"></i></router-link>
         </div>
     </div>
 </template>
@@ -130,8 +94,13 @@ export default {
     data(){
         return {
             auth:null,
-            pageTitle:'Log Absen',
+            pageTitle:'Absen Luar Lokasi',
             logs:[],
+            badges:{
+                'Menunggu':'bg-yellow-light',
+                'Disetujui':'bg-green-light',
+                'Ditolak':'bg-red-light',
+            },
             list_bulan:[
                 {
                     kode:'01',
@@ -214,7 +183,7 @@ export default {
 
             this.$refs.logabsenpreloader.toggle()
 
-            var request = await this.$store.dispatch('absen/getLogAbsen',{
+            var request = await this.$store.dispatch('absen/getAbsenLuar',{
                 bulan: this.periode.bulan+'-'+this.periode.tahun,
                 pegawai_id: this.auth.user_id,
                 jenis_pegawai: this.auth.jenis_pegawai
@@ -255,6 +224,35 @@ export default {
 }
 </script>
 <style scoped>
+.fab {
+    position:fixed;
+    bottom:0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 60px;
+    z-index:11;
+}
+
+.fab a {
+    text-align: center;
+    border:0;
+    display: block;
+    padding:15px;
+    margin-bottom:15px;
+    font-size: 25px;
+    border-radius:100%;
+    color:#FFF;
+    width: 55px;
+    box-shadow: 3px 3px 6px 0px rgb(0 0 0 / 30%);;
+}
+
+.btn-create-izin {
+    background-color:rgba(74, 137, 220, 1);
+}
+
+.btn-verif-izin {
+    background-color:rgb(212, 199, 77);
+}
 .collapse,.collapsing {
     padding:10px;
 }
