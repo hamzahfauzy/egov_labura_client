@@ -52,7 +52,7 @@ export default {
                 })
             })
         },
-        getAbsenBawahan({},data){
+        getAbsenLuarBawahan({},data){
             return new Promise(resolve => {
                 var formData = new FormData
                 formData.append('bulan',data.bulan)

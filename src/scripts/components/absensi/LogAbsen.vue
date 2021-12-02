@@ -39,7 +39,11 @@
                 <div class="pb-3"></div>
 
                 <div class="input-style input-style-always-active has-borders no-icon mb-4">
-                    <input type="tel" v-model="periode.tahun" class="form-control" id="form2ab" placeholder="Tahun" style="padding-top:0!important;transform: none!important;margin-bottom: 0!important;">
+                    <select class="form-control validate-name" name="tahun" id="tahun" v-model="periode.tahun">
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+                    <!-- <input type="tel" v-model="periode.tahun" class="form-control" id="form2ab" placeholder="Tahun" style="padding-top:0!important;transform: none!important;margin-bottom: 0!important;"> -->
                     <label for="form1ab" class="color-theme opacity-50 text-uppercase font-700 font-10">Tahun</label>
                     <i class="fa fa-check disabled invalid color-green-dark"></i>
                     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -202,15 +206,15 @@ export default {
     },
     methods:{
         async filterLog(){
-            if(this.periode.bulan == '' && this.periode.tahun == '')
-            {
-                this.warning = {
-                    title:'Maaf!',
-                    content:'Bulan dan Tahun tidak boleh Kosong'
-                }
-                this.$refs.warningAlert.toggle()
-                return
-            }
+            // if(this.periode.bulan == '' && this.periode.tahun == '')
+            // {
+            //     this.warning = {
+            //         title:'Maaf!',
+            //         content:'Bulan dan Tahun tidak boleh Kosong'
+            //     }
+            //     this.$refs.warningAlert.toggle()
+            //     return
+            // }
 
             this.$refs.logabsenpreloader.toggle()
 
@@ -245,6 +249,7 @@ export default {
         setTimeout(async function(){
             await vm.$store.dispatch('loader/setLoaderStatus',false)
             window.init_template()
+            await vm.filterLog()
         },1000)
     },
     computed: {
