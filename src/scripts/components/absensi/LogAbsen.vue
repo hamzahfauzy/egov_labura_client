@@ -249,7 +249,7 @@ export default {
         setTimeout(async function(){
             await vm.$store.dispatch('loader/setLoaderStatus',false)
             window.init_template()
-            await vm.filterLog()
+            // await vm.filterLog()
         },1000)
     },
     computed: {

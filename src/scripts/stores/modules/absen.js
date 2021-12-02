@@ -55,7 +55,8 @@ export default {
         getAbsenLuarBawahan({},data){
             return new Promise(resolve => {
                 var formData = new FormData
-                formData.append('bulan',data.bulan)
+                if(data.bulan && data.bulan != '-')
+                    formData.append('bulan',data.bulan)
                 formData.append('pegawai_id',data.pegawai_id)
                 formData.append('jenis_pegawai',data.jenis_pegawai)
                 if(data.status)

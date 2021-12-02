@@ -87,7 +87,10 @@
 
                     <div :id="'collapse'+i" class="bg-theme collapse" :data-bs-parent="'#accordion-1'" style="">
                         <div class="vcard-field" @click="showLogAbsenImage(log.link_absensi)">
-                            {{log.jenis_absen}}
+                            <strong>{{log.jenis_absen}}</strong>
+                            <a href="javascript:void(0)">
+                                {{log.keterangan}}
+                            </a>
                         </div>
                         <div class="row mb-0" v-if="log.status == 'Menunggu'">
                             <div class="col-4 pe-1">
