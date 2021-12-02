@@ -8,24 +8,25 @@
             <div class="card-bg preload-img" data-src="images/pictures/20s.jpg"></div>
         </div>
 
-        <div class="card card-style">
+        <div class="card card-style mb-2" v-for="(notif,key) in notifications" :key="key">
             <div class="content mt-0 mb-0">
-                <div class="list-group list-custom-small list-icon-0" v-if="notifications != []">
-                    <template v-for="(notif,key) in notifications">
-                        <button :key="key" style="line-height:2;padding-top:10px;padding-bottom:10px;" @click="openUrl(notif.url, $event)">
-                            <small style="color:#666"><i class="fa fa-clock fa-fw" style="line-height:1;"></i> {{notif.tanggal}}</small><br>
-                            <span style="font-weight:300" v-html="notif.contents"></span>
-                        </button>
-                    </template>
+                <div class="list-group list-custom-small list-icon-0">
+                    <button style="line-height:2;padding-top:10px;padding-bottom:10px;" @click="openUrl(notif.url, $event)">
+                        <small style="color:#666"><i class="fa fa-clock fa-fw" style="line-height:1;"></i> {{notif.tanggal}}</small><br>
+                        <span style="font-weight:300" v-html="notif.contents"></span>
+                    </button>
                 </div>      
-                <div class="list-group list-custom-small list-icon-0" v-else>
+            </div>
+        </div>
+        <div class="card card-style mb-2" v-if="notifications == null">
+            <div class="content mt-0 mb-0">
+                <div class="list-group list-custom-small list-icon-0">
                     <button style="text-align:center">
                         <span><i>Tidak ada Notifikasi!</i></span>
                     </button>
                 </div>      
             </div>  
         </div>
-
     </div>
 </template>
 <script>
@@ -34,17 +35,17 @@ export default {
     data(){
         return {
             pageTitle:'Notifikasi',
-            notifications:[]
+            notifications:null
         }
     },
-    async created(){
-        // this.$refs.vpreloader.toggle()
-        var auth = this.$helpers.auth()
-        var request = await this.$store.dispatch('notification/getNotif',auth)
-        this.notifications = request
-        // this.$refs.vpreloader.toggle()
-    },
     methods:{
+        async init(){
+            var auth = this.$helpers.auth()
+            this.$refs.vpreloader.toggle()
+            var request = await this.$store.dispatch('notification/getNotif',auth)
+            this.notifications = request
+            this.$refs.vpreloader.toggle()
+        },
         openUrl(url, ev){
             if(url != "" && ev.target.tagName.toLowerCase() != 'a')
                 window.open(url)
@@ -56,6 +57,7 @@ export default {
         setTimeout(async function(){
             await vm.$store.dispatch('loader/setLoaderStatus',false)
             window.init_template()
+            await vm.init()
         },1000)
     },
     computed: {
